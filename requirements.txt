@@ -1,0 +1,6 @@
+streamlit==1.42.2
+chromadb==0.5.23
+openai
+pydantic
+pysqlite3-binary
+setuptools

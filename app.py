@@ -100,11 +100,11 @@ def main():
 
         meeting_topic = meeting_topic.strip()
         
-        log_text = f"🔹 '{meeting_topic}' 주제에 대한 회의록 작성을 시작합니다...\n"
+        log_text = f"🔹 '{meeting_topic}' 주제에 대한 회의록 작성을 시작합니다...  \n"
         output_placeholder.text_area("📜 진행 상황 및 결과", log_text, height=300)
 
         if not files:
-            log_text += "⚠️ 업로드된 파일이 없습니다. 먼저 파일을 업로드하세요.\n"
+            log_text += "⚠️ 업로드된 파일이 없습니다. 먼저 파일을 업로드하세요.  \n"
             output_placeholder.text_area("📜 진행 상황 및 결과", log_text, height=300)
             return
 
@@ -123,7 +123,7 @@ def main():
           vector_store_id=vector_store.id, files=file_streams
         )
         
-        log_text += f"📄 총 {len(files)}개의 파일을 분석 중...\n"
+        log_text += f"📄 총 {len(files)}개의 파일을 분석 중...  \n"
         output_placeholder.text_area("📜 진행 상황 및 결과", log_text, height=300)
 
         assistant = client.beta.assistants.create(
@@ -194,17 +194,17 @@ def main():
         result = messages.data[0].content[0].text.value
 
         # GPT 결과 업데이트
-        log_text += f"\n🔹 OpenAI {model_name} 결과:\n{result}\n"
-        output_placeholder.text_area("📜 진행 상황 및 결과", log_text, height=300)
-
+        log_text += f"🔹 OpenAI {model_name} 결과:  \n{result}  \n"
+        
+        output_placeholder.markdown(log_text);
+        
         # GPT 결과를 파일로 저장
         output_file_path = os.path.join("./", f"회의록_{meeting_name}.txt")
         with open(output_file_path, "w", encoding="utf-8") as f:
             f.write(str(result))  # ✅ Output을 문자열로 변환하여 저장
 
-        log_text += f"\n✅ '{meeting_topic}' 주제에 대한 회의록 작성을 완료하였습니다!\n"
-        #output_placeholder.text_area("📜 진행 상황 및 결과", log_text, height=300)
-
+        log_text += f"  \n✅ '{meeting_topic}' 주제에 대한 회의록 작성을 완료하였습니다!  \n"
+        
         output_placeholder.markdown(log_text);
 
         # 파일 및 vectorstore 삭제

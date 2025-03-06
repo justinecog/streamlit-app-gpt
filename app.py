@@ -225,7 +225,7 @@ def main():
         run = client.beta.threads.runs.create_and_poll(
           thread_id=user1.id,
           assistant_id=assistant.id,
-          instructions=f"""{result} \n 위 내용을 다음 양식과 같이 변경해서 출력해줘. 
+          instructions=f"""{result} \n 위 내용을 표 부분만 다음 양식과 같이 변경해서 출력해줘. 
             회의록 제목 (회의록 내용 분석 후 회의록 제목 기재)
             | **날짜** | YYYY-MM-DD |
             | --- | --- |
@@ -234,23 +234,7 @@ def main():
             | **회의 기록자** | @멘션 |
             | **회의 참여자** | @멘션 |
             | **참조** | @멘션 |
-            ## **아젠다**
-            *   (당일 회의 핵심 아젠다를 두괄식으로 기재)
-            *   *
-            ## 회의 내용
-            ### 1. 제목
-            *   (정리된 회의 내용)
-            ### 2. 제목
-            *   (정리된 회의 내용)
-            ### 3. 제목
-            *   (정리된 회의 내용)
-            ## 랩업
-            *   (회의 후 결정 사항, 액션 아이템, Next Step 등 정리)
-            *   **Action Items**
-                - (액션 아이템)
-            *   **결정 사항**
-                - (결정 사항)
-        
+	         (나머지 부분 동일)
           """)
         
         messages = client.beta.threads.messages.list(

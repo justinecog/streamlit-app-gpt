@@ -221,7 +221,7 @@ def main():
         log_text += f"🔹 OpenAI {model_name} 결과:  \n{result}  \n"
         
         output_placeholder.markdown(log_text, unsafe_allow_html=True);
-
+        '''
         run = client.beta.threads.runs.create_and_poll(
           thread_id=user1.id,
           assistant_id=assistant.id,
@@ -257,22 +257,22 @@ def main():
           thread_id = user1.id
         )
 
-        result_reformatted = messages.data[0].content[0].text.value
-        
+        result = messages.data[0].content[0].text.value
+        '''
         # GPT 결과를 파일로 저장
         output_file_path = os.path.join("./", f"회의록_{meeting_name}.txt")
         with open(output_file_path, "w", encoding="utf-8") as f:
-            f.write(str(result_reformatted))  # ✅ Output을 문자열로 변환하여 저장
+            f.write(str(result))  # ✅ Output을 문자열로 변환하여 저장
 
+        log_text += f"  \n✅ '{meeting_topic}' 주제에 대한 회의록 작성을 완료하였습니다!  \n"
+        
+        output_placeholder.markdown(log_text, unsafe_allow_html=True);
+        
         # 파일 및 vectorstore 삭제
         all_files = list(client.beta.vector_stores.files.list(vector_store_id = vector_store.id))
         for file in all_files:
             client.files.delete(file.id)
         client.beta.vector_stores.delete(vector_store.id)
-
-        log_text += f"  \n✅ '{meeting_topic}' 주제에 대한 회의록 작성을 완료하였습니다!  \n"
-        
-        output_placeholder.markdown(log_text, unsafe_allow_html=True);
 
         # 파일 다운로드 버튼 제공
         with open(output_file_path, "rb") as file:

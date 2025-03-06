@@ -7,7 +7,7 @@ from datetime import datetime
 import openai
 from openai import OpenAI
 openai.api_key = st.secrets["OPENAI_API_KEY"]
-model_name = "gpt-4o-mini"
+MODEL_NAME = "gpt-4o-mini"
 
 # 기본 폴더 경로
 BASE_DIR = "dir"
@@ -129,7 +129,7 @@ def main():
         assistant = client.beta.assistants.create(
           instructions=f"""회의록을 작성해주는 어시스턴트 봇이다.
           """,
-          model=model_name,
+          model=MODEL_NAME,
           tools=[{"type": "file_search"}]
         )
         
@@ -200,7 +200,7 @@ def main():
         client.beta.vector_stores.delete(vector_store.id)
         
         # GPT 결과 업데이트
-        log_text += f"🔹 OpenAI {model_name} 결과:  \n{result}  \n"
+        log_text += f"🔹 OpenAI {MODEL_NAME} 결과:  \n{result}  \n"
         
         output_placeholder.markdown(log_text, unsafe_allow_html=True);
         

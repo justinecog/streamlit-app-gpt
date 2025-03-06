@@ -222,6 +222,43 @@ def main():
         
         output_placeholder.markdown(log_text, unsafe_allow_html=True);
         
+        run = client.beta.threads.runs.create_and_poll(
+          thread_id=user1.id,
+          assistant_id=assistant.id,
+          instructions=f"""{result} \n 위 내용을 다음 양식과 같이 변경해서 출력해줘. 
+            회의록 제목 (회의록 내용 분석 후 회의록 제목 기재)
+            | **날짜** | YYYY-MM-DD |
+            | --- | --- |
+            | **장소** | (회의 장소) |
+            | **회의 매니저** | @멘션 |
+            | **회의 기록자** | @멘션 |
+            | **회의 참여자** | @멘션 |
+            | **참조** | @멘션 |
+            ## **아젠다**
+            *   (당일 회의 핵심 아젠다를 두괄식으로 기재)
+            *   *
+            ## 회의 내용
+            ### 1. 제목
+            *   (정리된 회의 내용)
+            ### 2. 제목
+            *   (정리된 회의 내용)
+            ### 3. 제목
+            *   (정리된 회의 내용)
+            ## 랩업
+            *   (회의 후 결정 사항, 액션 아이템, Next Step 등 정리)
+            *   **Action Items**
+                - (액션 아이템)
+            *   **결정 사항**
+                - (결정 사항)
+        
+          """)
+        
+        messages = client.beta.threads.messages.list(
+          thread_id = user1.id
+        )
+        
+        result = messages.data[0].content[0].text.value
+        
         # GPT 결과를 파일로 저장
         output_file_path = os.path.join("./", f"회의록_{meeting_name}.txt")
         with open(output_file_path, "w", encoding="utf-8") as f:
@@ -230,7 +267,6 @@ def main():
         log_text += f"  \n✅ '{meeting_topic}' 주제에 대한 회의록 작성을 완료하였습니다!  \n"
         
         output_placeholder.markdown(log_text, unsafe_allow_html=True);
-        
         # 파일 및 vectorstore 삭제
         all_files = list(client.beta.vector_stores.files.list(vector_store_id = vector_store.id))
         for file in all_files:
@@ -246,42 +282,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-'''
-run = client.beta.threads.runs.create_and_poll(
-  thread_id=user1.id,
-  assistant_id=assistant.id,
-  instructions=f"""{result} \n 위 내용을 다음 양식과 같이 변경해서 출력해줘. 
-    회의록 제목 (회의록 내용 분석 후 회의록 제목 기재)
-    | **날짜** | YYYY-MM-DD |
-    | --- | --- |
-    | **장소** | (회의 장소) |
-    | **회의 매니저** | @멘션 |
-    | **회의 기록자** | @멘션 |
-    | **회의 참여자** | @멘션 |
-    | **참조** | @멘션 |
-    ## **아젠다**
-    *   (당일 회의 핵심 아젠다를 두괄식으로 기재)
-    *   *
-    ## 회의 내용
-    ### 1. 제목
-    *   (정리된 회의 내용)
-    ### 2. 제목
-    *   (정리된 회의 내용)
-    ### 3. 제목
-    *   (정리된 회의 내용)
-    ## 랩업
-    *   (회의 후 결정 사항, 액션 아이템, Next Step 등 정리)
-    *   **Action Items**
-        - (액션 아이템)
-    *   **결정 사항**
-        - (결정 사항)
-
-  """)
-
-messages = client.beta.threads.messages.list(
-  thread_id = user1.id
-)
-
-result = messages.data[0].content[0].text.value
-'''

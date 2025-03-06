@@ -229,7 +229,7 @@ def main():
         output_placeholder.markdown(log_text, unsafe_allow_html=True);
         
         # GPT 결과를 파일로 저장
-        output_file_path = os.path.join("./", f"회의록_{meeting_name}.md")
+        output_file_path = os.path.join("./", f"회의록_{meeting_name}.txt")
         with open(output_file_path, "w", encoding="utf-8") as f:
             f.write(str(result))  # ✅ Output을 문자열로 변환하여 저장
 
@@ -239,7 +239,7 @@ def main():
         
         # 파일 다운로드 버튼 제공
         with open(output_file_path, "rb") as file:
-            st.download_button("📥 회의록 다운로드", file, file_name=f"회의록_{meeting_name}.md")
+            st.download_button("📥 회의록 다운로드", file, file_name=f"회의록_{meeting_name}.txt")
 
         
         output_placeholder.markdown(log_text, unsafe_allow_html=True);

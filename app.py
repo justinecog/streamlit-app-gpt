@@ -217,6 +217,12 @@ def main():
 
         result = messages.data[0].content[0].text.value
 
+        # 파일 및 vectorstore 삭제
+        all_files = list(client.beta.vector_stores.files.list(vector_store_id = vector_store.id))
+        for file in all_files:
+            client.files.delete(file.id)
+        client.beta.vector_stores.delete(vector_store.id)
+        
         # GPT 결과 업데이트
         log_text += f"🔹 OpenAI {model_name} 결과:  \n{result}  \n"
         
@@ -251,12 +257,7 @@ def main():
         log_text += f"  \n✅ '{meeting_topic}' 주제에 대한 회의록 작성을 완료하였습니다!  \n"
         
         output_placeholder.markdown(log_text, unsafe_allow_html=True);
-        # 파일 및 vectorstore 삭제
-        all_files = list(client.beta.vector_stores.files.list(vector_store_id = vector_store.id))
-        for file in all_files:
-            client.files.delete(file.id)
-        client.beta.vector_stores.delete(vector_store.id)
-
+        
         # 파일 다운로드 버튼 제공
         with open(output_file_path, "rb") as file:
             st.download_button("📥 회의록 다운로드", file, file_name=f"회의록_{meeting_name}.txt")

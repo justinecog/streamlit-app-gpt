@@ -160,37 +160,13 @@ def main():
                 ■ 응답 구조
 
                 # 회의록 제목 (회의록 내용 분석 후 회의록 제목 기재)
-                <table style="width:80%; border-collapse: collapse;" border="1">
-                    <colgroup>
-                        <col style="width: 30%;">
-                        <col style="width: 70%;">
-                    </colgroup">
-                    <tr>
-                        <th><strong>날짜</strong></th>
-                        <td>YYYY-MM-DD</td>
-                    </tr>
-                    <tr>
-                        <th><strong>장소</strong></th>
-                        <td>(회의 장소)</td>
-                    </tr>
-                    <tr>
-                        <th><strong>회의 매니저</strong></th>
-                        <td>@멘션</td>
-                    </tr>
-                    <tr>
-                        <th><strong>회의 기록자</strong></th>
-                        <td>@멘션</td>
-                    </tr>
-                    <tr>
-                        <th><strong>회의 참여자</strong></th>
-                        <td>@멘션</td>
-                    </tr>
-                    <tr>
-                        <th><strong>참조</strong></th>
-                        <td>@멘션</td>
-                    </tr>
-                </table>
-                
+                | **날짜** | YYYY-MM-DD |
+                | --- | --- |
+                | **장소** | (회의 장소) |
+                | **회의 매니저** | @멘션 |
+                | **회의 기록자** | @멘션 |
+                | **회의 참여자** | @멘션 |
+                | **참조** | @멘션 |
                 ## **아젠다**
                 *   (당일 회의 핵심 아젠다를 두괄식으로 기재)
                 *   *

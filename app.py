@@ -228,27 +228,6 @@ def main():
         
         output_placeholder.markdown(log_text, unsafe_allow_html=True);
         
-        run = client.beta.threads.runs.create_and_poll(
-          thread_id=user1.id,
-          assistant_id=assistant.id,
-          instructions=f"""{result} \n 위 내용을 표 부분만 다음 양식과 같이 변경해서 출력해줘. 
-            회의록 제목 (회의록 내용 분석 후 회의록 제목 기재)
-            | **날짜** | YYYY-MM-DD |
-            | --- | --- |
-            | **장소** | (회의 장소) |
-            | **회의 매니저** | @멘션 |
-            | **회의 기록자** | @멘션 |
-            | **회의 참여자** | @멘션 |
-            | **참조** | @멘션 |
-	         (나머지 부분 동일)
-          """)
-        
-        messages = client.beta.threads.messages.list(
-          thread_id = user1.id
-        )
-        
-        result = messages.data[0].content[0].text.value
-        
         # GPT 결과를 파일로 저장
         output_file_path = os.path.join("./", f"회의록_{meeting_name}.txt")
         with open(output_file_path, "w", encoding="utf-8") as f:

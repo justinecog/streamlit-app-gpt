@@ -239,7 +239,7 @@ def main():
         
         # 파일 다운로드 버튼 제공
         with open(output_file_path, "rb") as file:
-            st.download_button("📥 회의록 다운로드", file, file_name=f"회의록_{meeting_name}.txt")
+            st.download_button("📥 회의록 다운로드", file, file_name=f"회의록_{meeting_name}.md")
 
         
         output_placeholder.markdown(log_text, unsafe_allow_html=True);
